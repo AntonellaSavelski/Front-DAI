@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "front-personajes",
+    "slug": "front-personajes",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "front-personajes"
+}

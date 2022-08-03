@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 
-const Boton = (props) => {
+const BotonDoble = (props) => {
 
     const { onPress, text } = props
     return (
@@ -19,7 +19,7 @@ const Boton = (props) => {
     )
 }
 
-export default Boton
+export default BotonDoble
 
 const style = StyleSheet.create({
 
@@ -32,10 +32,8 @@ const style = StyleSheet.create({
         backgroundColor: 'red',
         borderWidth:2,
         borderColor: 'white',
-        borderRadius: 15,
         padding: 15,
-        marginTop: '2.5%',
-        width: '80%'
+        marginTop: '1%',
     },
 
 });

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Alert, FlatList,SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Alert, FlatList, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Boton from '../components/boton.jsx';
 import fondoPag from '../assets/img/fondoPag.jpg'
 import Card from '../components/Card.jsx';
 import { getPlatos, getPlatosXNombre } from '../services/buscadorService.js';
+import BotonList from '../components/BotonList.jsx';
 
 
 const Home = ({ navigation }) => {
@@ -13,18 +14,17 @@ const Home = ({ navigation }) => {
         lista:[]
     });
 
-    const getPlatosPorNombre = async(Busqueda) =>{
-        let tamano = Busqueda.length;
+    const getPlatosPorNombre = async(search) =>{
+        let tamano = search.length;
         
-        if(!Busqueda || tamano < 2){
-            Alert.alert("Por favor ingrese un plato que contenga más de 2 caracteres")
+        if(!search || tamano <= 2){
             console.log("Por favor ingrese un plato que contenga más de 2 caracteres")
             setBusqueda({lista:[]})
             
         }
         else {
-            getPlatosXNombre(Busqueda).then((lista)=>{
-                setBusqueda({lista:lista}) 
+            getPlatosXNombre(search).then((res)=>{
+                setBusqueda({lista:res}) 
             })
             .catch(() => {
                 console.log("no entró")
@@ -48,14 +48,18 @@ const Home = ({ navigation }) => {
             <View style={styles.vista}>
             <TextInput style={styles.textInput} 
             placeholder= "Ingrese el nombre del plato"
-            onChange={(Busqueda) => {getPlatosPorNombre(Busqueda)}}
+            onChangeText={(search) => {getPlatosPorNombre(search)}}
             />
             <FlatList
             keyExtractor={(item)=>item.title}
             data = {Busqueda.lista}
-            renderItem = {({item}) => {
+            renderItem={({item}) =>(
+                <BotonList
+                text = {item.title}
+                onPress = {getPlatos}
+                />
                 
-            }}
+             )}
       />
                 <Text style={styles.titulo}>Menú de platos</Text>
 

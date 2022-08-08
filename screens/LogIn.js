@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Boton from '../components/boton.jsx';
-import { getLogIn } from '../axios/axios.js';
 import { postLogIn } from '../services/logInService';
 import fondoPag from '../assets/img/fondoPag.jpg'
 
@@ -12,19 +11,22 @@ const LogIn = ({ navigation }) => {
         email: '',
         password: '',
     });
+    const [disable, setDisable] = useState(false);
 
     const onLogInPress = async (e) => {
-
+        setDisable(true)
         if (!userState.email || !userState.password) {
             console.log("Por favor ingresar todos los datos")
             Alert.alert("Por favor ingresar todos los datos")
         } else {
             await postLogIn(userState).then(() => {
                 navigation.navigate('Home')
+                setDisable(false)
             })
                 .catch(() => {
                     console.log("Error 401")
                     Alert.alert("No tiene el ingreso autorizado, lo siento!")
+                    setDisable(false)
                 });
         }
     }
@@ -51,6 +53,7 @@ const LogIn = ({ navigation }) => {
                 <Boton
                     text="Iniciar Sesion"
                     title="Iniciar Sesion"
+                    disable={ disable }
                     onPress={onLogInPress}
                 />
                 <Text style={styles.texto}
@@ -67,7 +70,7 @@ export default LogIn
 
 const styles = StyleSheet.create({
     vista: {
-        height: 970,
+       minHeight: "100vh",
         padding: '5%',
         alignItems: 'center',
         justifyContent: 'center'

@@ -3,10 +3,11 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 
 const Boton = (props) => {
 
-    const { onPress, text } = props
+    const { onPress, text, disable } = props
     return (
     
         <TouchableOpacity
+            disabled={disable}
             style={style.button}
             onPress={onPress}
         >

@@ -13,6 +13,7 @@ const Home = ({ navigation }) => {
     const [Busqueda, setBusqueda] = useState({
         lista:[]
     });
+    const [disable, setDisable] = useState(false);
 
     const getPlatosPorNombre = async(search) =>{
         let tamano = search.length;
@@ -32,11 +33,14 @@ const Home = ({ navigation }) => {
               });
         }
     }
+    const onDetallePress = () =>{
+
+        navigation.navigate('Detalle')
+    }
 {/* 
     useEffect(() => {
         getPlatos(setPlatos); //trae la lista de todos los platos
         {Platos && Platos.map((Plato) => (
-
             console.log(Plato.title) //muestra los nombres de todos los platos
     
         ))}
@@ -44,19 +48,23 @@ const Home = ({ navigation }) => {
 */}
 
     return (
-        <ImageBackground source={fondoPag} >
+        <ImageBackground source={fondoPag} style={styles.image} >
             <View style={styles.vista}>
             <TextInput style={styles.textInput} 
             placeholder= "Ingrese el nombre del plato"
             onChangeText={(search) => {getPlatosPorNombre(search)}}
             />
+            
             <FlatList
+            style={styles.flatllist}
             keyExtractor={(item)=>item.title}
             data = {Busqueda.lista}
             renderItem={({item}) =>(
+
                 <BotonList
+                image={item.image}
                 text = {item.title}
-                onPress = {getPlatos}
+                onPress={onDetallePress}
                 />
                 
              )}
@@ -74,10 +82,12 @@ export default Home
 
 const styles = StyleSheet.create({
     vista: {
-        minHeight: "100vh",
         padding: '5%',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    image:{
+        minHeight: '100vh',
     },
     titulo: {
         fontSize: 30,
@@ -92,5 +102,5 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         backgroundColor: "#fff",
         marginTop: '1%',
-    }
+    },
 });

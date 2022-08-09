@@ -6,7 +6,7 @@ import { postLogIn } from '../services/logInService';
 import fondoPag from '../assets/img/fondoPag.jpg'
 
 
-const Detalle = ({ navigation }) => {
+const Detalle = ({ props }) => {
 
     return (
         <ImageBackground source={fondoPag} >

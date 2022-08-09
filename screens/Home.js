@@ -34,7 +34,7 @@ const Home = ({ navigation }) => {
         }
     }
     const onDetallePress = () =>{
-
+        let variable = Busqueda.lista
         navigation.navigate('Detalle')
     }
 {/* 
@@ -70,7 +70,6 @@ const Home = ({ navigation }) => {
              )}
       />
                 <Text style={styles.titulo}>Menú de platos</Text>
-
                 <Card />
             </View>
         </ImageBackground>

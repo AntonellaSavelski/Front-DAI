@@ -18,7 +18,7 @@ export const getPlatos = async (setUseState) => {
 };
 export const getPlatosXNombre = async (busqueda) =>{
     return axiosClient
-        .get(`/recipes/complexSearch?apiKey=a60c366f621d4bfcb00ef85f47523958&query=${busqueda}`,{
+        .get(`/recipes/complexSearch?apiKey=e4637bee1283459ba8ba3765cd975ad3&query=${busqueda}`,{
         })
         .then(function(res) {
             console.log(res.data.results)

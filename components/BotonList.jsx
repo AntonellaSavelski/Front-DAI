@@ -9,11 +9,14 @@ const BotonList = (props) => {
         <TouchableOpacity
             
             disabled={disable}
-            style={[style.platos, {backgroundImage:image}]}
+            style={[style.platos, {backgroundImage: image} ]}
 
             onPress={onPress}
         >
-            <Image source={image}/>
+            <Image 
+            source={{image}}
+
+            />
             <Text style={style.buttonText}>
                 {text}
             </Text>
@@ -36,7 +39,7 @@ const style = StyleSheet.create({
         padding: 15,
         borderRadius: 3,
         marginTop: '1%',
-        width: "100vh",
+        width: "80vh",
         backgroundColor: "white"
     }
 

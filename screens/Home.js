@@ -54,29 +54,29 @@ const Home = ({ navigation }) => {
                     onChangeText={(search) => { getPlatosPorNombre(search) }}
                 />
 
-                <FlatList
+                <FlatList style={styles.flatlist}
                     keyExtractor={(item) => item.title}
                     data={Busqueda.lista}
                     renderItem={({ item }) => {
 
                         return (
-                            <View style={styles.boton}>
-                                
+                           
+                            <TouchableOpacity onPress={() => { onDetallePress(item) }}>
+                                 <View style={styles.boton}>
                                 <BotonList
                                     text={item.title}
                                     onPress={() => { onDetallePress(item) }}
                                 />
                                 
                                 {item.image && (
-                                    <TouchableOpacity onPress={() => { onDetallePress(item) }}>
                                     <Image
                                         source={item.image}
                                         style={styles.img} 
                                         />
-                                    </TouchableOpacity>
                                     )}
-                                    
-                            </View>
+                                    </View>
+                            </TouchableOpacity>
+                            
                         );
                     }}
 
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         paddingHorizontal: 30,
         paddingVertical:15,
-        width: "80vh",
+        width: "100%",
         borderRadius: 8,
         backgroundColor: "#fff",
         marginTop: '1%',
@@ -132,4 +132,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         marginTop: '1%',
     },
+    flatlist: {
+        width: "60%",
+    }
 });

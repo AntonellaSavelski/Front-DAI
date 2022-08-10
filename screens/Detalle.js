@@ -4,51 +4,36 @@ import { useNavigation } from '@react-navigation/native';
 import Boton from '../components/boton.jsx';
 import { postLogIn } from '../services/logInService';
 import fondoPag from '../assets/img/fondoPag.jpg'
-import { getPlatosXId, getDetallePlato } from '../services/buscadorService.js';
+import { getPlatosXId } from '../services/buscadorService.js';
 
 const Detalle = ({ route, navigation }) => {
 
     const { id } = route.params
-    const [detallePlato, setDetallePlato] = useState({
-        nombre: '',
-        vegetariano: '',
-        vegano: '',
-        tiempo: '',
-        precio: '',
-        imagen: ''
-    });
+    const [detallePlato, setDetallePlato] = useState([]);
 
-    useEffect(async (vegano) => {
+    useEffect(async () => {
         const detallePlato = await getPlatosXId(id);
         setDetallePlato(detallePlato)
-        detalle()
+
     }, [])
 
-    const detalle = async () => {
-
-      getDetallePlato(id,vegano).then((res) => {
-        setDetallePlato({...detallePlato, vegano: res })
-    })
-        .catch(() => {
-            console.log("no entró")
-            Alert.alert("no entró")
-        });
-    }
     return (
         <ImageBackground source={fondoPag} >
             <View style={styles.vista}>
                 <Text style={styles.titulo}><strong>Detalle del Plato</strong></Text>
                 <View style={styles.detalle}>
                     <header>
-                       <Image source={detallePlato.imagen} style={styles.img} />
+                        <Image
+                            source={{ uri: detallePlato.image}}
+                            style={styles.img}
+                        />
                     </header>
-
                     <Text style={styles.texto}><strong>Id: </strong>{id}</Text>
-                    <Text style={styles.texto}><strong>Nombre: </strong>{detallePlato.nombre}</Text>
-                    <Text style={styles.texto}><strong>Precio: </strong>{detallePlato.precio}</Text>
-                    <Text style={styles.texto}><strong>Es vegano: </strong>{detallePlato.vegano}</Text>
-                    <Text style={styles.texto}><strong>Es vegetariano: </strong>{detallePlato.vegetariano}</Text>
-                    <Text style={styles.texto}><strong>Tiempo de preparación: </strong>{detallePlato.tiempo}</Text>
+                    <Text style={styles.texto}><strong>Nombre: </strong>{detallePlato.title}</Text>
+                    <Text style={styles.texto}><strong>Precio: $</strong>{detallePlato.pricePerServing}</Text>
+                    <Text style={styles.texto}><strong>Es vegano: </strong>{detallePlato.vegan}</Text>
+                    <Text style={styles.texto}><strong>Es vegetariano: </strong>{detallePlato.vegetarian}</Text>
+                    <Text style={styles.texto}><strong>Tiempo de preparación: </strong>{detallePlato.readyInMinutes}</Text>
                 </View>
             </View>
         </ImageBackground>
@@ -66,15 +51,13 @@ const styles = StyleSheet.create({
     },
     detalle: {
         backgroundColor: 'white',
-        textAlign: 'justify',
         borderWidth: 2,
         borderColor: 'black',
         borderRadius: 15,
         fontSize: 18,
-        margin:0,
+        margin: 0,
         padding: 15,
         marginTop: '2.5%',
-        alignItems: 'left'
     },
     texto: {
         marginTop: '1.5%',
@@ -82,11 +65,10 @@ const styles = StyleSheet.create({
     },
     titulo: {
         fontSize: 30,
-        alignItems: 'center',
-        textAlign: 'center',
-
     },
     img: {
-    
+        width: 200,
+        height: 100,
+        marginBottom: '1.5%'
     }
 });

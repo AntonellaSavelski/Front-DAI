@@ -4,15 +4,24 @@ import { useNavigation } from '@react-navigation/native';
 import Boton from '../components/boton.jsx';
 import { postLogIn } from '../services/logInService';
 import fondoPag from '../assets/img/fondoPag.jpg'
+import { getPlatosXId } from '../services/buscadorService.js';
 
+const Detalle = ( {route, navigation}) => {
 
-const Detalle = ({ props }) => {
+    const { id } = route.params
+
+    //hacer detallePlato y setDetallePlato
+    useEffect(async() => {
+        const detallePlato = await getPlatosXId(id);
+        setDetallePlato(detallePlato)
+        
+    }, [])
 
     return (
         <ImageBackground source={fondoPag} >
             <View style={styles.vista}>
                 <Text style={styles.titulo}>Detalle del Plato</Text>
-               
+                <Text style={styles.titulo}>{id}</Text>
             </View>
         </ImageBackground>
 
@@ -32,7 +41,8 @@ const styles = StyleSheet.create({
     },
     titulo: {
         fontSize: 30,
-        marginBottom: '1%',
+        alignItems: 'center',
+        textAlign:'center',
         fontWeight: 'bold'
     },
     textInput: {

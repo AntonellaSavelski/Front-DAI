@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Alert, FlatList, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Alert, FlatList, Button, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Boton from '../components/boton.jsx';
 import fondoPag from '../assets/img/fondoPag.jpg'
@@ -11,33 +11,32 @@ import BotonList from '../components/BotonList.jsx';
 const Home = ({ navigation }) => {
     const [Platos, setPlatos] = useState([]);
     const [Busqueda, setBusqueda] = useState({
-        lista:[]
+        lista: []
     });
     const [disable, setDisable] = useState(false);
 
-    const getPlatosPorNombre = async(search) =>{
+    const getPlatosPorNombre = async (search) => {
         let tamano = search.length;
-        
-        if(!search || tamano <= 2){
+
+        if (!search || tamano <= 2) {
             console.log("Por favor ingrese un plato que contenga más de 2 caracteres")
-            setBusqueda({lista:[]})
-            
+            setBusqueda({ lista: [] })
+
         }
         else {
-            getPlatosXNombre(search).then((res)=>{
-                setBusqueda({lista:res}) 
+            getPlatosXNombre(search).then((res) => {
+                setBusqueda({ lista: res })
             })
-            .catch(() => {
-                console.log("no entró")
-                Alert.alert("no entró")
-              });
+                .catch(() => {
+                    console.log("no entró")
+                    Alert.alert("no entró")
+                });
         }
     }
-    const onDetallePress = () =>{
-        let variable = Busqueda.lista
-        navigation.navigate('Detalle')
+    const onDetallePress = (item) => {
+        navigation.navigate('Detalle', {id:item.id})
     }
-{/* 
+    {/* 
     useEffect(() => {
         getPlatos(setPlatos); //trae la lista de todos los platos
         {Platos && Platos.map((Plato) => (
@@ -50,25 +49,39 @@ const Home = ({ navigation }) => {
     return (
         <ImageBackground source={fondoPag} style={styles.image} >
             <View style={styles.vista}>
-            <TextInput style={styles.textInput} 
-            placeholder= "Ingrese el nombre del plato"
-            onChangeText={(search) => {getPlatosPorNombre(search)}}
-            />
-            
-            <FlatList
-            style={styles.flatllist}
-            keyExtractor={(item)=>item.title}
-            data = {Busqueda.lista}
-            renderItem={({item}) =>(
-
-                <BotonList
-                image={item.image}
-                text = {item.title}
-                onPress={onDetallePress}
+                <TextInput style={styles.textInput}
+                    placeholder="Ingrese el nombre del plato"
+                    onChangeText={(search) => { getPlatosPorNombre(search) }}
                 />
-                
-             )}
-      />
+
+                <FlatList
+                    keyExtractor={(item) => item.title}
+                    data={Busqueda.lista}
+                    renderItem={({ item }) => {
+
+                        return (
+                            <View style={styles.boton}>
+                                
+                                <BotonList
+                                    text={item.title}
+                                    onPress={() => { onDetallePress(item) }}
+                                />
+                                
+                                {item.image && (
+                                    <TouchableOpacity onPress={() => { onDetallePress(item) }}>
+                                    <Image
+                                        source={item.image}
+                                        style={styles.img} 
+                                        />
+                                    </TouchableOpacity>
+                                    )}
+                                    
+                            </View>
+                        );
+                    }}
+
+                />
+
                 <Text style={styles.titulo}>Menú de platos</Text>
                 <Card />
             </View>
@@ -85,8 +98,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    image:{
+    boton:{
+        borderWidth: 1,
+        paddingHorizontal: 30,
+        paddingVertical:15,
+        width: "80vh",
+        borderRadius: 8,
+        backgroundColor: "#fff",
+        marginTop: '1%',
+        flex:1,
+        alignItems:'center',
+        flexDirection:'row',
+        justifyContent:'space-between'
+    },
+    image: {
         minHeight: '100vh',
+    },
+    img:{
+        height: 100, 
+        width:100,
     },
     titulo: {
         fontSize: 30,

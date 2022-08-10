@@ -21,11 +21,14 @@ const MainStack = () => {
                 <Stack.Screen
                     name='Home'
                     component={Home}
+                    
                 />
                 <Stack.Screen
                     name='Detalle'
-                    component={Detalle}
-                />
+                >
+                    {(props) => <Detalle {...props} 
+                />}
+                </Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>
 

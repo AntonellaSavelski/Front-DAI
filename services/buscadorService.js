@@ -29,3 +29,16 @@ export const getPlatosXNombre = async (busqueda) =>{
             throw "error"
         });
 };
+export const getPlatosXId = async (id) =>{
+    return axiosClient
+        .get(`/recipes/${id}/information?apiKey=e4637bee1283459ba8ba3765cd975ad3`,{
+        })
+        .then(function(res) {
+            console.log(res.data)
+            return res.data
+        })
+        .catch(function(){
+    
+            throw "error"
+        });
+};

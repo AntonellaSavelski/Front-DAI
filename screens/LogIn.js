@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Alert, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Boton from '../components/boton.jsx';
 import { postLogIn } from '../services/logInService';
@@ -50,12 +50,17 @@ const LogIn = ({ navigation }) => {
                     secureTextEntry={true}
                     onChangeText={text => setUserState({ ...userState, password: text })}
                 />
-                <Boton
+                {
+                    !disable ? 
+                    <Boton
                     text="Iniciar Sesion"
                     title="Iniciar Sesion"
                     disable={ disable }
                     onPress={onLogInPress}
-                />
+                    /> :
+                    <ActivityIndicator size="large" style={{marginTop: '2.5%'}}/>
+                }
+                
                 <Text style={styles.texto}
                     onPress={() => {
                         navigation.navigate('')

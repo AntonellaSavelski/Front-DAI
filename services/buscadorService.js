@@ -18,7 +18,7 @@ export const getPlatos = async (setUseState) => {
 };
 export const getPlatosXNombre = async (busqueda) =>{
     return axiosClient
-        .get(`/recipes/complexSearch?apiKey=e4637bee1283459ba8ba3765cd975ad3&query=${busqueda}`,{
+        .get(`/recipes/complexSearch?apiKey=a60c366f621d4bfcb00ef85f47523958&query=${busqueda}`,{
         })
         .then(function(res) {
             console.log(res.data.results)
@@ -31,10 +31,23 @@ export const getPlatosXNombre = async (busqueda) =>{
 };
 export const getPlatosXId = async (id) =>{
     return axiosClient
-        .get(`/recipes/${id}/information?apiKey=e4637bee1283459ba8ba3765cd975ad3`,{
+        .get(`/recipes/${id}/information?apiKey=a60c366f621d4bfcb00ef85f47523958`,{
         })
         .then(function(res) {
             console.log(res.data)
+            return res.data
+        })
+        .catch(function(){
+    
+            throw "error"
+        });
+};
+export const getDetallePlato = async (id, info) =>{
+    return axiosClient
+        .get(`/recipes/${id}/information?apiKey=a60c366f621d4bfcb00ef85f47523958&query=${info}`,{
+        })
+        .then(function(res) {
+            console.log(res.data.info)
             return res.data
         })
         .catch(function(){

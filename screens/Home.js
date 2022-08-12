@@ -35,17 +35,9 @@ const Home = ({ navigation }) => {
     }
     const onDetallePress = (item) => {
         navigation.navigate('Detalle', {id:item.id})
+        //volver a que el search no tenga valor
     }
-    {/* 
-    useEffect(() => {
-        getPlatos(setPlatos); //trae la lista de todos los platos
-        {Platos && Platos.map((Plato) => (
-            console.log(Plato.title) //muestra los nombres de todos los platos
     
-        ))}
-    }, [])
-*/}
-
     return (
         <ImageBackground source={fondoPag} style={styles.image} >
             <View style={styles.vista}>
@@ -96,13 +88,13 @@ const styles = StyleSheet.create({
     vista: {
         padding: '5%',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     boton:{
         borderWidth: 1,
-        paddingHorizontal: 30,
+        paddingHorizontal: '8%',
         paddingVertical:15,
-        width: "100%",
+        minWidth:"100%",
         borderRadius: 8,
         backgroundColor: "#fff",
         marginTop: '1%',
@@ -116,7 +108,7 @@ const styles = StyleSheet.create({
     },
     img:{
         height: 100, 
-        width:100,
+        width:'25%',
     },
     titulo: {
         fontSize: 30,
@@ -133,6 +125,6 @@ const styles = StyleSheet.create({
         marginTop: '1%',
     },
     flatlist: {
-        width: "60%",
+        width: "70%",
     }
 });

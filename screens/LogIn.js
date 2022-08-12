@@ -50,6 +50,7 @@ const LogIn = ({ navigation }) => {
                     secureTextEntry={true}
                     onChangeText={text => setUserState({ ...userState, password: text })}
                 />
+                <View style={{width:'80%'}}>
                 {
                     !disable ? 
                     <Boton
@@ -60,7 +61,8 @@ const LogIn = ({ navigation }) => {
                     /> :
                     <ActivityIndicator size="large" style={{marginTop: '2.5%'}}/>
                 }
-                
+                </View>
+
                 <Text style={styles.texto}
                     onPress={() => {
                         navigation.navigate('')

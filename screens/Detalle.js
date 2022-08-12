@@ -10,30 +10,69 @@ const Detalle = ({ route, navigation }) => {
 
     const { id } = route.params
     const [detallePlato, setDetallePlato] = useState([]);
+    const [menu, setMenu] = useState({
+        platos:[],
+        precioTotal: 0,
+        tiempoTotal:0,
+        platosVegetarianos: 0,
+        platosVeganos:0
 
-    useEffect(async () => {
-        const detallePlato = await getPlatosXId(id);
-        setDetallePlato(detallePlato)
+    })
 
+    useEffect((e) => {
+        async function detallesPlato() {
+            const detallePlato = await getPlatosXId(id);
+            setDetallePlato(detallePlato)
+        }
+        detallesPlato()
     }, [])
 
+    const onAgregarPress = async (e) => {
+       if(menu.platos.length < 4 && menu.platosVeganos< 2 && menu.platosVegetarianos<2){
+            //agregar el plato al menu
+            setMenu({ platos: detallePlato.title })
+            console.log(menu)
+            navigation.navigate('Home');
+            menu.precioTotal= menu.precioTotal + detallePlato.pricePerServing
+            console.log(menu.precioTotal)
+            menu.tiempoTotal= menu.tiempoTotal + detallePlato.readyInMinutes
+            if(detallePlato.vegan=='true'){
+                menu.vegan = menu.vegan + 1
+            }
+            else if (detallePlato.vegetarian=='true'){
+                menu.vegetarian = menu.vegetarian+1
+                console.log(menu.vegetarian)
+            }
+
+       }
+       else {
+        console.log("No se puede agregar plato al menú")
+        Alert.alert("No se puede agregar plato al menú")
+       }
+
+    }
     return (
         <ImageBackground source={fondoPag} >
             <View style={styles.vista}>
                 <Text style={styles.titulo}><strong>Detalle del Plato</strong></Text>
                 <View style={styles.detalle}>
-                    <header>
                         <Image
                             source={{ uri: detallePlato.image}}
                             style={styles.img}
                         />
-                    </header>
+
                     <Text style={styles.texto}><strong>Id: </strong>{id}</Text>
                     <Text style={styles.texto}><strong>Nombre: </strong>{detallePlato.title}</Text>
                     <Text style={styles.texto}><strong>Precio: $</strong>{detallePlato.pricePerServing}</Text>
-                    <Text style={styles.texto}><strong>Es vegano: </strong>{detallePlato.vegan}</Text>
-                    <Text style={styles.texto}><strong>Es vegetariano: </strong>{detallePlato.vegetarian}</Text>
+                    <Text style={styles.texto}><strong>Es vegano: </strong>{detallePlato.vegan ? 'Si' : 'No'}</Text>
+                    <Text style={styles.texto}><strong>Es vegetariano: </strong>{detallePlato.vegetarian ? 'Si' : 'No'}</Text>
                     <Text style={styles.texto}><strong>Tiempo de preparación: </strong>{detallePlato.readyInMinutes}</Text>
+
+                    <Boton style={{width:'100%'}}
+                     text="Agregar al menú"
+                     title="Ver detalle"
+                     onPress={onAgregarPress}
+                    />
                 </View>
             </View>
         </ImageBackground>
@@ -45,7 +84,6 @@ export default Detalle
 const styles = StyleSheet.create({
     vista: {
         minHeight: "100vh",
-        padding: '5%',
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -58,17 +96,19 @@ const styles = StyleSheet.create({
         margin: 0,
         padding: 15,
         marginTop: '2.5%',
+
     },
     texto: {
-        marginTop: '1.5%',
-        fontSize: 20
+        marginBottom: '3%',
+        fontSize: 20,
+        textAlign: 'left'
     },
     titulo: {
         fontSize: 30,
     },
     img: {
-        width: 200,
-        height: 100,
-        marginBottom: '1.5%'
+        width: -'100%',
+        height: 150,
+        marginBottom: '5%'
     }
 });

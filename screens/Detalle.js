@@ -5,20 +5,14 @@ import Boton from '../components/boton.jsx';
 import { postLogIn } from '../services/logInService';
 import fondoPag from '../assets/img/fondoPag.jpg'
 import { getPlatosXId } from '../services/buscadorService.js';
+import { actionTypes, useContextState } from '../contextState.js';
 
 const Detalle = ({ route, navigation }) => {
 
     const { id } = route.params
+    const {contextState, setContextState} = useContextState();
     const [detallePlato, setDetallePlato] = useState([]);
-    const [menu, setMenu] = useState({
-        platos:[],
-        precioTotal: 0,
-        tiempoTotal:0,
-        platosVegetarianos: 0,
-        platosVeganos:0
-
-    })
-
+    
     useEffect((e) => {
         async function detallesPlato() {
             const detallePlato = await getPlatosXId(id);
@@ -28,20 +22,23 @@ const Detalle = ({ route, navigation }) => {
     }, [])
 
     const onAgregarPress = async (e) => {
-       if(menu.platos.length < 4 && menu.platosVeganos< 2 && menu.platosVegetarianos<2){
+       if(contextState.menu.platos.length < 4 && contextState.menu.platosVeganos< 2 && contextState.menu.platosVegetarianos<2){
             //agregar el plato al menu
-            setMenu({ platos: detallePlato.title })
-            console.log(menu)
+            setContextState({
+                type: actionTypes.SetMenuPlatos,
+                value: detallePlato.title
+            })
+            console.log(contextState.menu)
             navigation.navigate('Home');
-            menu.precioTotal= menu.precioTotal + detallePlato.pricePerServing
+            contextState.menu.precioTotal= contextState.menu.precioTotal + detallePlato.pricePerServing
             console.log(menu.precioTotal)
-            menu.tiempoTotal= menu.tiempoTotal + detallePlato.readyInMinutes
+            contextState.menu.tiempoTotal= contextState.menu.tiempoTotal + detallePlato.readyInMinutes
             if(detallePlato.vegan=='true'){
-                menu.vegan = menu.vegan + 1
+                contextState.menu.platosVeganos = contextState.menu.platosVeganos + 1
             }
             else if (detallePlato.vegetarian=='true'){
-                menu.vegetarian = menu.vegetarian+1
-                console.log(menu.vegetarian)
+                contextState.menu.platosVegetarianos = contextState.menu.platosVegetarianos+1
+                console.log(contextState.menu.platosVegetarianos)
             }
 
        }

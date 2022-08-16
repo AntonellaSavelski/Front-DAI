@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import React from "react";
 
 export const initialState ={
     token:'',
@@ -15,9 +16,13 @@ export const actionTypes={
     SetMenu:'SET_MENU',
     SetMenuPlatos:'SET_MENU_PLATOS',
     SetMenuPrecio:'SET_MENU_PRECIO',
+    SetAddPrecio:'SET_ADD_PRECIO',
     SetMenuTiempo:'SET_MENU_TIEMPO',
+    SetAddTiempo:'SET_ADD_TIEMPO',
     SetMenuVegetariano:'SET_MENU_VEGETARIANO',
-    SetMenuVegano:'SET_MENU_VEGANO'
+    SetAddVegetariano:'SET_ADD_VEGETARIANO',
+    SetMenuVegano:'SET_MENU_VEGANO',
+    SetAddVegano:'SET_ADD_VEGANO',
 };
 export const reducer =(state ={}, action)=>{
     switch (action.type){
@@ -35,34 +40,79 @@ export const reducer =(state ={}, action)=>{
             return{
                 ...state,
                 menu:{
-                    ...menu,
+                    ...state.menu,
                     platos:action.value
                 }                
             };
+
+            case actionTypes.SetMenuPrecio:
+            return{
+                ...state,
+                menu:{
+                    ...state.menu,
+                    precioTotal:action.value
+                }                
+            };
+            case actionTypes.SetAddPrecio:
+            return{
+                ...state,
+                menu:{
+                    ...state.menu,
+                    precioTotal:state.menu.precioTotal + action.value
+                }                
+            };
+
             case actionTypes.SetMenuTiempo:
             return{
                 ...state,
                 menu:{
-                    ...menu,
-                    tiempo:action.value
+                    ...state.menu,
+                    tiempoTotal:action.value
                 }                
             };
+            case actionTypes.SetAddTiempo:
+            return{
+                ...state,
+                menu:{
+                    ...state.menu,
+                    tiempoTotal:state.menu.tiempoTotal + action.value
+                }                
+            };
+
             case actionTypes.SetMenuVegetariano:
             return{
                 ...state,
                 menu:{
-                    ...menu,
+                    ...state.menu,
                     platosVegetarianos:action.value
                 }                
             };
+            case actionTypes.SetAddVegetariano:
+            return{
+                ...state,
+                menu:{
+                    ...state.menu,
+                    platosVegetarianos:state.menu.platosVegetarianos + action.value
+                }                
+            };
+
             case actionTypes.SetMenuVegano:
             return{
                 ...state,
                 menu:{
-                    ...menu,
+                    ...state.menu,
                     platosVeganos:action.value
                 }                
             };
+            case actionTypes.SetAddVegano:
+            return{
+                ...state,
+                menu:{
+                    ...state.menu,
+                    platosVeganos:state.menu.platosVeganos + action.value
+                }                
+            };
+
         default:
             return state;
     }

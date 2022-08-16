@@ -28,19 +28,32 @@ const Detalle = ({ route, navigation }) => {
                 type: actionTypes.SetMenuPlatos,
                 value: detallePlato.title
             })
-            console.log(contextState.menu)
+            
             navigation.navigate('Home');
-            contextState.menu.precioTotal= contextState.menu.precioTotal + detallePlato.pricePerServing
-            console.log(menu.precioTotal)
-            contextState.menu.tiempoTotal= contextState.menu.tiempoTotal + detallePlato.readyInMinutes
+            setContextState({
+                type: actionTypes.SetAddPrecio,
+                value:detallePlato.pricePerServing
+            })
+            console.log('preciodelplato', detallePlato.pricePerServing)
+            console.log('preciototal',contextState.menu.precioTotal)
+            setContextState({
+                type: actionTypes.SetAddTiempo,
+                value:detallePlato.readyInMinutes
+            })
             if(detallePlato.vegan=='true'){
-                contextState.menu.platosVeganos = contextState.menu.platosVeganos + 1
+                setContextState({
+                    type: actionTypes.SetAddVegano,
+                    value:1
+                })
             }
             else if (detallePlato.vegetarian=='true'){
-                contextState.menu.platosVegetarianos = contextState.menu.platosVegetarianos+1
-                console.log(contextState.menu.platosVegetarianos)
+                setContextState({
+                    type: actionTypes.SetAddVegetariano,
+                    value:1
+                })
+                console.log('platosVegetarianos', contextState.menu.platosVegetarianos)
             }
-
+            console.log(contextState.menu)
        }
        else {
         console.log("No se puede agregar plato al menú")

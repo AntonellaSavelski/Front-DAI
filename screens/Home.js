@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Alert, FlatList, Button, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import Boton from '../components/boton.jsx';
 import fondoPag from '../assets/img/fondoPag.jpg'
 import Card from '../components/Card.jsx';
@@ -8,7 +8,8 @@ import { getPlatos, getPlatosXNombre } from '../services/buscadorService.js';
 import BotonList from '../components/BotonList.jsx';
 
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation,route }) => {
+    const isFocused = useIsFocused();
     const [Platos, setPlatos] = useState([]);
     const [Busqueda, setBusqueda] = useState({
         lista: []
@@ -37,7 +38,16 @@ const Home = ({ navigation }) => {
         navigation.navigate('Detalle', {id:item.id})
         //volver a que el search no tenga valor
     }
-    
+    useEffect(() => {
+        setBusqueda({Busqueda:""})
+        setPlatos({lista:[]})
+        if(isFocused){
+            getInitialData();
+        }
+    }, [isFocused]);
+
+    const getInitialData = async () =>{}
+
     return (
         <ImageBackground source={fondoPag} style={styles.image} >
             <View style={styles.vista}>

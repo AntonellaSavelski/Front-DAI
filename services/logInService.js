@@ -7,7 +7,8 @@ export const postLogIn = async (userState) => {
         ...userState
       })
       .then(async(res) => {
-        return res.status
+        console.log(res.data.token)
+        return res.data.token
       })
       .catch((e) => {
         console.log(`register error`, e.response);

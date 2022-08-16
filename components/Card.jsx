@@ -8,12 +8,16 @@ const Card = (props) => {
     return (
 
         <View style={style.card}>
-            <header>
-                <Image source={props.img} style={style.img} />
-            </header>
+             <Image
+                        source={{ uri: props.imagen }}
+                        style={style.img}
+                    />
             <Text style={style.lista} >
                 Titulo: {props.titulo} <br />
-                Caracteristicas: {props.caracteristicas}<br />
+                Precio: {props.precio}<br />
+                Tiempo: {props.tiempo}<br />
+                Vegano: {props.vegano ? 'Si' : 'No'}<br />
+
                 <BotonDoble style={style.boton}
                     text="Ver detalle"
                     title="Ver detalle"
@@ -33,7 +37,9 @@ export default Card
 
 const style = StyleSheet.create({
     img: {
-        height: 20
+        width: '100%',
+        height: 150,
+        marginBottom: '5%'
     },
     boton:{
         marginTop: '5%'

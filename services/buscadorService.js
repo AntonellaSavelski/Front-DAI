@@ -1,9 +1,11 @@
 import axiosClient from "../axios/axiosBusqueda";
 
+const apiKey= "apiKey=e4637bee1283459ba8ba3765cd975ad3";
+
 export const getPlatos = async (setUseState) => {
 
     return axiosClient
-        .get(`/recipes/complexSearch?apiKey=e4637bee1283459ba8ba3765cd975ad3`,{
+        .get(`/recipes/complexSearch?apiKey=a60c366f621d4bfcb00ef85f47523958`,{
       
         })
         .then(async (res) => {
@@ -18,7 +20,7 @@ export const getPlatos = async (setUseState) => {
 };
 export const getPlatosXNombre = async (busqueda) =>{
     return axiosClient
-        .get(`/recipes/complexSearch?apiKey=a60c366f621d4bfcb00ef85f47523958&query=${busqueda}`,{
+        .get(`/recipes/complexSearch?${apiKey}&query=${busqueda}`,{
         })
         .then(function(res) {
             console.log(res.data.results)
@@ -31,7 +33,7 @@ export const getPlatosXNombre = async (busqueda) =>{
 };
 export const getPlatosXId = async (id) =>{
     return axiosClient
-        .get(`/recipes/${id}/information?apiKey=a60c366f621d4bfcb00ef85f47523958`,{
+        .get(`/recipes/${id}/information?${apiKey}`,{
         })
         .then(function(res) {
             console.log(res.data)

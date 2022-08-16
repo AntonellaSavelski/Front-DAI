@@ -10,9 +10,10 @@ import { actionTypes, useContextState } from '../contextState.js';
 const Detalle = ({ route, navigation }) => {
 
     const { id } = route.params
-    const {contextState, setContextState} = useContextState();
+    const { contextState, setContextState } = useContextState();
     const [detallePlato, setDetallePlato] = useState([]);
-    
+    let estaEnMenu = contextState.menu.platos.find(plato => plato.id === detallePlato.id)
+
     useEffect((e) => {
         async function detallesPlato() {
             const detallePlato = await getPlatosXId(id);
@@ -22,43 +23,40 @@ const Detalle = ({ route, navigation }) => {
     }, [])
 
     const onAgregarPress = async (e) => {
-       if(contextState.menu.platos.length < 4 && contextState.menu.platosVeganos< 2 && contextState.menu.platosVegetarianos<2){
+        if (contextState.menu.platos.length < 4 && contextState.menu.platosVeganos < 2 && contextState.menu.platosVegetarianos < 2) {
             //agregar el plato al menu
             setContextState({
                 type: actionTypes.SetMenuPlatos,
-                value: detallePlato.title
+                value: [...contextState.menu.platos,detallePlato]
+                //el primer plato no se agrega al array
             })
-            
             navigation.navigate('Home');
             setContextState({
                 type: actionTypes.SetAddPrecio,
-                value:detallePlato.pricePerServing
+                value: detallePlato.pricePerServing
             })
-            console.log('preciodelplato', detallePlato.pricePerServing)
-            console.log('preciototal',contextState.menu.precioTotal)
             setContextState({
                 type: actionTypes.SetAddTiempo,
-                value:detallePlato.readyInMinutes
+                value: detallePlato.readyInMinutes
             })
-            if(detallePlato.vegan=='true'){
+            if (detallePlato.vegan == 'true') {
                 setContextState({
                     type: actionTypes.SetAddVegano,
-                    value:1
+                    value: 1 
                 })
             }
-            else if (detallePlato.vegetarian=='true'){
+            else if (detallePlato.vegetarian == 'true') {
                 setContextState({
                     type: actionTypes.SetAddVegetariano,
-                    value:1
+                    value: 1
                 })
-                console.log('platosVegetarianos', contextState.menu.platosVegetarianos)
             }
             console.log(contextState.menu)
-       }
-       else {
-        console.log("No se puede agregar plato al menú")
-        Alert.alert("No se puede agregar plato al menú")
-       }
+        }
+        else {
+            console.log("No se puede agregar plato al menú")
+            Alert.alert("No se puede agregar plato al menú")
+        }
 
     }
     return (
@@ -66,10 +64,10 @@ const Detalle = ({ route, navigation }) => {
             <View style={styles.vista}>
                 <Text style={styles.titulo}><strong>Detalle del Plato</strong></Text>
                 <View style={styles.detalle}>
-                        <Image
-                            source={{ uri: detallePlato.image}}
-                            style={styles.img}
-                        />
+                    <Image
+                        source={{ uri: detallePlato.image }}
+                        style={styles.img}
+                    />
 
                     <Text style={styles.texto}><strong>Id: </strong>{id}</Text>
                     <Text style={styles.texto}><strong>Nombre: </strong>{detallePlato.title}</Text>
@@ -78,11 +76,23 @@ const Detalle = ({ route, navigation }) => {
                     <Text style={styles.texto}><strong>Es vegetariano: </strong>{detallePlato.vegetarian ? 'Si' : 'No'}</Text>
                     <Text style={styles.texto}><strong>Tiempo de preparación: </strong>{detallePlato.readyInMinutes}</Text>
 
-                    <Boton style={{width:'100%'}}
-                     text="Agregar al menú"
-                     title="Ver detalle"
-                     onPress={onAgregarPress}
-                    />
+                    {
+                        estaEnMenu
+                            ?
+                            <Boton style={{ width: '100%' }}
+                                text="Eliminar"
+                                title="Eliminar"
+                                onPress={onAgregarPress}
+                            />
+                            :
+                            <Boton style={{ width: '100%' }}
+                                text="Agregar al menú"
+                                title="Agregar al menú"
+                                onPress={onAgregarPress}
+                            />
+                    }
+
+
                 </View>
             </View>
         </ImageBackground>
@@ -117,7 +127,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
     },
     img: {
-        width: -'100%',
+        width: '100%',
         height: 150,
         marginBottom: '5%'
     }

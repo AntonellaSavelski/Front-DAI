@@ -6,10 +6,12 @@ import fondoPag from '../assets/img/fondoPag.jpg'
 import Card from '../components/Card.jsx';
 import { getPlatos, getPlatosXNombre } from '../services/buscadorService.js';
 import BotonList from '../components/BotonList.jsx';
+import { useContextState } from '../contextState.js';
 
 
 const Home = ({ navigation,route }) => {
     const isFocused = useIsFocused();
+    const { contextState, setContextState } = useContextState();
     const [Platos, setPlatos] = useState([]);
     const [Busqueda, setBusqueda] = useState({
         lista: []
@@ -85,7 +87,23 @@ const Home = ({ navigation,route }) => {
                 />
 
                 <Text style={styles.titulo}>Menú de platos</Text>
-                <Card />
+                <FlatList
+                    keyExtractor={(item) => item.title}
+                    data={contextState.menu.platos}
+                    renderItem={({ item }) => {
+
+                        return (
+                            <Card 
+                            imagen= {item.image}
+                            titulo= {item.title}
+                            tiempo= {item.readyInMinutes}
+                            precio= {item.pricePerServing}
+                            vegano= {item.vegan}
+                            />
+                            
+                        );
+                    }}
+                />
             </View>
         </ImageBackground>
 

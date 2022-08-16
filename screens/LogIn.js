@@ -4,9 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 import Boton from '../components/boton.jsx';
 import { postLogIn } from '../services/logInService';
 import fondoPag from '../assets/img/fondoPag.jpg'
-
+import { actionTypes, useContextState } from '../contextState.js';
 
 const LogIn = ({ navigation }) => {
+    const {contextState, setContextState} = useContextState();
     const [userState, setUserState] = useState({
         email: '',
         password: '',
@@ -19,7 +20,13 @@ const LogIn = ({ navigation }) => {
             console.log("Por favor ingresar todos los datos")
             Alert.alert("Por favor ingresar todos los datos")
         } else {
-            await postLogIn(userState).then(() => {
+            await postLogIn(userState).then((res) => {
+                setContextState({
+                    type: actionTypes.SetToken,
+                    value: res
+                })
+                console.log(contextState)
+                
                 navigation.navigate('Home')
                 setDisable(false)
             })

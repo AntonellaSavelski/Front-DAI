@@ -98,7 +98,7 @@ const Home = ({ navigation,route }) => {
                             id= {item.id}
                             imagen= {item.image}
                             titulo= {item.title}
-                            tiempo= {item.readyInMinutes}
+                            saludable= {item.healthScore}
                             precio= {item.pricePerServing}
                             vegano= {item.vegan}
                             />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Alert, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Boton from '../components/boton.jsx';
 import { postLogIn } from '../services/logInService';
@@ -37,8 +37,8 @@ const Detalle = ({ route, navigation }) => {
                 value: detallePlato.pricePerServing
             })
             setContextState({
-                type: actionTypes.SetAddTiempo,
-                value: detallePlato.readyInMinutes
+                type: actionTypes.SetAddHealth,
+                value: detallePlato.healthScore
             })
             if (detallePlato.vegan) {
                 setContextState({
@@ -61,15 +61,15 @@ const Detalle = ({ route, navigation }) => {
 
     }
     return (
+
         <ImageBackground source={fondoPag} >
-            <AntDesign style={styles.flecha} name="left" size={15} />
-            <Text style={styles.atras}
-                onPress={() => {
-                    navigation.navigate('Home')
-                }}>
-                Volver atrás
-            </Text>
             <View style={styles.vista}>
+                <Text style={styles.atras}
+                    onPress={() => {
+                        navigation.navigate('Home')
+                    }}>
+                    Volver atrás
+                </Text>
                 <Text style={styles.titulo}><strong>Detalle del Plato</strong></Text>
                 <View style={styles.detalle}>
                     <Image
@@ -82,7 +82,7 @@ const Detalle = ({ route, navigation }) => {
                     <Text style={styles.texto}><strong>Precio: $</strong>{detallePlato.pricePerServing}</Text>
                     <Text style={styles.texto}><strong>Es vegano: </strong>{detallePlato.vegan ? 'Si' : 'No'}</Text>
                     <Text style={styles.texto}><strong>Es vegetariano: </strong>{detallePlato.vegetarian ? 'Si' : 'No'}</Text>
-                    <Text style={styles.texto}><strong>Tiempo de preparación: </strong>{detallePlato.readyInMinutes}</Text>
+                    <Text style={styles.texto}><strong>Puntaje saludable: </strong>{detallePlato.healthScore}</Text>
                     {
                         estaEnMenu
                             ?
@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
         minHeight: "100vh",
         alignItems: 'center',
         justifyContent: 'center',
-
     },
     detalle: {
         backgroundColor: 'white',
@@ -139,14 +138,9 @@ const styles = StyleSheet.create({
         marginBottom: '5%'
     },
     atras: {
-        position: 'absolute',
-        top: '7%',
-        left: '15%',
+        marginBottom: '2%',
         textDecorationLine: 'underline'
-    },
-    flecha: {
-      position: 'absolute',
-      top: '7.3%',
-      left: '13.5%',
     }
+
+
 });

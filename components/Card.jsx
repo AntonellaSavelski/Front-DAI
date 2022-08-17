@@ -23,7 +23,7 @@ const Card = (props) => {
 
             <Text style={style.texto}><strong>Titulo: </strong>{props.titulo}</Text>
             <Text style={style.texto}><strong>Precio: $ </strong>{props.precio}</Text>
-            <Text style={style.texto}><strong>Tiempo: </strong>{props.tiempo}</Text>
+            <Text style={style.texto}><strong>Saludable: </strong>{props.saludable}</Text>
             <Text style={style.texto}><strong>Vegano: </strong>{props.vegano ? 'Si' : 'No'}</Text>
 
             <View style={style.boton} >
@@ -54,7 +54,7 @@ const style = StyleSheet.create({
     },
     boton: {
         marginTop: '5%',
-        minWidth:150
+        minWidth: 150
     },
     card: {
         backgroundColor: 'white',
@@ -64,7 +64,7 @@ const style = StyleSheet.create({
         fontSize: 18,
         marginTop: '2.5%',
         padding: 15,
-        marginHorizontal: 10,
+        marginHorizontal: 10
 
     },
     texto: {

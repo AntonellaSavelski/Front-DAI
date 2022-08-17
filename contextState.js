@@ -6,7 +6,7 @@ export const initialState ={
     menu:{
         platos:[],
         precioTotal: 0,
-        tiempoTotal:0,
+        puntajeSaludable:0,
         platosVegetarianos: 0,
         platosVeganos:0
     }
@@ -17,8 +17,8 @@ export const actionTypes={
     SetMenuPlatos:'SET_MENU_PLATOS',
     SetMenuPrecio:'SET_MENU_PRECIO',
     SetAddPrecio:'SET_ADD_PRECIO',
-    SetMenuTiempo:'SET_MENU_TIEMPO',
-    SetAddTiempo:'SET_ADD_TIEMPO',
+    SetMenuSaludable:'SET_MENU_SALUDABLE',
+    SetAddSaludable:'SET_ADD_SALUDABLE',
     SetMenuVegetariano:'SET_MENU_VEGETARIANO',
     SetAddVegetariano:'SET_ADD_VEGETARIANO',
     SetMenuVegano:'SET_MENU_VEGANO',
@@ -62,20 +62,20 @@ export const reducer =(state ={}, action)=>{
                 }                
             };
 
-            case actionTypes.SetMenuTiempo:
+            case actionTypes.SetMenuSaludable:
             return{
                 ...state,
                 menu:{
                     ...state.menu,
-                    tiempoTotal:action.value
+                    puntajeSaludable:action.value
                 }                
             };
-            case actionTypes.SetAddTiempo:
+            case actionTypes.SetAddSaludable:
             return{
                 ...state,
                 menu:{
                     ...state.menu,
-                    tiempoTotal:state.menu.tiempoTotal + action.value
+                    puntajeSaludable:state.menu.puntajeSaludable + action.value
                 }                
             };
 

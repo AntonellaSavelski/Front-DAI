@@ -14,21 +14,21 @@ const Detalle = ({ route, navigation }) => {
     const [detallePlato, setDetallePlato] = useState([]);
     let estaEnMenu = contextState.menu.platos.find(plato => plato.id === detallePlato.id)
 
-    useEffect((e) => {
-        async function detallesPlato() {
-            const detallePlato = await getPlatosXId(id);
-            setDetallePlato(detallePlato)
-        }
-        detallesPlato()
+    useEffect(async () => {
+
+        const detallePlato = await getPlatosXId(id);
+        setDetallePlato(detallePlato)
+
     }, [])
 
     const onAgregarPress = async (e) => {
         if (contextState.menu.platos.length < 4 && contextState.menu.platosVeganos < 2 && contextState.menu.platosVegetarianos < 2) {
             //agregar el plato al menu
+            const newMenu = [...contextState.menu.platos];
+            newMenu.push(detallePlato); 
             setContextState({
                 type: actionTypes.SetMenuPlatos,
-                value: [...contextState.menu.platos,detallePlato]
-                //el primer plato no se agrega al array
+                value: newMenu
             })
             navigation.navigate('Home');
             setContextState({
@@ -39,13 +39,13 @@ const Detalle = ({ route, navigation }) => {
                 type: actionTypes.SetAddTiempo,
                 value: detallePlato.readyInMinutes
             })
-            if (detallePlato.vegan == 'true') {
+            if (detallePlato.vegan) {
                 setContextState({
                     type: actionTypes.SetAddVegano,
-                    value: 1 
+                    value: 1
                 })
             }
-            else if (detallePlato.vegetarian == 'true') {
+            else if (detallePlato.vegetarian ) {
                 setContextState({
                     type: actionTypes.SetAddVegetariano,
                     value: 1
@@ -75,7 +75,6 @@ const Detalle = ({ route, navigation }) => {
                     <Text style={styles.texto}><strong>Es vegano: </strong>{detallePlato.vegan ? 'Si' : 'No'}</Text>
                     <Text style={styles.texto}><strong>Es vegetariano: </strong>{detallePlato.vegetarian ? 'Si' : 'No'}</Text>
                     <Text style={styles.texto}><strong>Tiempo de preparación: </strong>{detallePlato.readyInMinutes}</Text>
-
                     {
                         estaEnMenu
                             ?
@@ -92,7 +91,6 @@ const Detalle = ({ route, navigation }) => {
                             />
                     }
 
-
                 </View>
             </View>
         </ImageBackground>
@@ -105,7 +103,8 @@ const styles = StyleSheet.create({
     vista: {
         minHeight: "100vh",
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+
     },
     detalle: {
         backgroundColor: 'white',

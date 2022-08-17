@@ -1,6 +1,7 @@
 import axiosClient from "../axios/axiosBusqueda";
 
-const apiKey= "apiKey=e4637bee1283459ba8ba3765cd975ad3";
+//const apiKey= "apiKey=e4637bee1283459ba8ba3765cd975ad3";
+const apiKey= "apiKey=a60c366f621d4bfcb00ef85f47523958";
 
 export const getPlatos = async (setUseState) => {
 

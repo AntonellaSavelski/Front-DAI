@@ -87,13 +87,13 @@ const Home = ({ navigation,route }) => {
                 />
 
                 <Text style={styles.titulo}>Menú de platos</Text>
-                <FlatList
+                <FlatList 
                     keyExtractor={(item) => item.title}
                     data={contextState.menu.platos}
                     renderItem={({ item }) => {
-
                         return (
-                            <Card 
+                            <Card
+                            id= {item.id}
                             imagen= {item.image}
                             titulo= {item.title}
                             tiempo= {item.readyInMinutes}
@@ -154,5 +154,5 @@ const styles = StyleSheet.create({
     },
     flatlist: {
         width: "70%",
-    }
+    },
 });

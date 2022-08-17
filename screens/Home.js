@@ -88,10 +88,12 @@ const Home = ({ navigation,route }) => {
 
                 <Text style={styles.titulo}>Menú de platos</Text>
                 <FlatList 
-                    keyExtractor={(item) => item.title}
+                 horizontal={true}
+                      keyExtractor={(item) => item.title}
                     data={contextState.menu.platos}
                     renderItem={({ item }) => {
                         return (
+                            
                             <Card
                             id= {item.id}
                             imagen= {item.image}
@@ -100,7 +102,7 @@ const Home = ({ navigation,route }) => {
                             precio= {item.pricePerServing}
                             vegano= {item.vegan}
                             />
-                            
+  
                         );
                     }}
                 />
@@ -155,4 +157,8 @@ const styles = StyleSheet.create({
     flatlist: {
         width: "70%",
     },
+    prueba:{
+        flexDirection:'row',
+        justifyContent:'space-between'
+    }
 });

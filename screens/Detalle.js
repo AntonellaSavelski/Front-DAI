@@ -6,6 +6,7 @@ import { postLogIn } from '../services/logInService';
 import fondoPag from '../assets/img/fondoPag.jpg'
 import { getPlatosXId } from '../services/buscadorService.js';
 import { actionTypes, useContextState } from '../contextState.js';
+import { AntDesign } from '@expo/vector-icons';
 
 const Detalle = ({ route, navigation }) => {
 
@@ -25,7 +26,7 @@ const Detalle = ({ route, navigation }) => {
         if (contextState.menu.platos.length < 4 && contextState.menu.platosVeganos < 2 && contextState.menu.platosVegetarianos < 2) {
             //agregar el plato al menu
             const newMenu = [...contextState.menu.platos];
-            newMenu.push(detallePlato); 
+            newMenu.push(detallePlato);
             setContextState({
                 type: actionTypes.SetMenuPlatos,
                 value: newMenu
@@ -45,7 +46,7 @@ const Detalle = ({ route, navigation }) => {
                     value: 1
                 })
             }
-            else if (detallePlato.vegetarian ) {
+            else if (detallePlato.vegetarian) {
                 setContextState({
                     type: actionTypes.SetAddVegetariano,
                     value: 1
@@ -61,6 +62,13 @@ const Detalle = ({ route, navigation }) => {
     }
     return (
         <ImageBackground source={fondoPag} >
+            <AntDesign style={styles.flecha} name="left" size={15} />
+            <Text style={styles.atras}
+                onPress={() => {
+                    navigation.navigate('Home')
+                }}>
+                Volver atrás
+            </Text>
             <View style={styles.vista}>
                 <Text style={styles.titulo}><strong>Detalle del Plato</strong></Text>
                 <View style={styles.detalle}>
@@ -129,5 +137,16 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 150,
         marginBottom: '5%'
+    },
+    atras: {
+        position: 'absolute',
+        top: '7%',
+        left: '15%',
+        textDecorationLine: 'underline'
+    },
+    flecha: {
+      position: 'absolute',
+      top: '7.3%',
+      left: '13.5%',
     }
 });

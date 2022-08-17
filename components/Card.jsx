@@ -48,13 +48,13 @@ export default Card
 
 const style = StyleSheet.create({
     img: {
-        width: '100%',
+        width: 300,
         height: 150,
         marginBottom: '5%'
     },
     boton: {
         marginTop: '5%',
-        minWidth:250
+        minWidth:150
     },
     card: {
         backgroundColor: 'white',
@@ -64,11 +64,14 @@ const style = StyleSheet.create({
         fontSize: 18,
         marginTop: '2.5%',
         padding: 15,
+        marginHorizontal: 10,
+
     },
     texto: {
         marginBottom: '3%',
         fontSize: 20,
-        textAlign: 'left'
+        textAlign: 'left',
+        maxWidth: 300,
     },
 
 });

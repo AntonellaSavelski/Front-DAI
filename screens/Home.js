@@ -6,7 +6,7 @@ import fondoPag from '../assets/img/fondoPag.jpg'
 import Card from '../components/Card.jsx';
 import { getPlatos, getPlatosXNombre } from '../services/buscadorService.js';
 import BotonList from '../components/BotonList.jsx';
-import { useContextState } from '../contextState.js';
+import { actionTypes, useContextState } from '../contextState.js';
 
 
 const Home = ({ navigation, route }) => {
@@ -41,11 +41,18 @@ const Home = ({ navigation, route }) => {
         //volver a que el search no tenga valor
     }
     useEffect(() => {
-        setBusqueda({ Busqueda: "" })
-        setPlatos({ lista: [] })
-        if (isFocused) {
-            getInitialData();
+
+        if (contextState.token === '') {
+            console.log("No estás autorizado para acceder")
+            navigation.navigate("LogIn")
+        } else {
+            setBusqueda({ Busqueda: "" })
+            setPlatos({ lista: [] })
+            if (isFocused) {
+                getInitialData();
+            }
         }
+
     }, [isFocused]);
 
     const getInitialData = async () => { }
@@ -57,51 +64,49 @@ const Home = ({ navigation, route }) => {
                     placeholder="Ingrese el nombre del plato"
                     onChangeText={(search) => { getPlatosPorNombre(search) }}
                 />
-
                 <FlatList style={styles.flatlist}
                     keyExtractor={(item) => item.title}
                     data={Busqueda.lista}
                     renderItem={({ item }) => {
 
                         return (
-                            //no funciona el disable
                             <View>
-                                {
-                                    !disable ?
-                                        <TouchableOpacity onPress={() => { onDetallePress(item) }}>
-                                            <View style={styles.boton}>
-                                                <BotonList
-                                                    disable={disable}
-                                                    text={item.title}
-                                                    onPress={() => { onDetallePress(item) }}
-                                                />
+                                <TouchableOpacity onPress={() => { onDetallePress(item) }}>
+                                    <View style={styles.boton}>
+                                        <BotonList
+                                            disable={disable}
+                                            text={item.title}
+                                            onPress={() => { onDetallePress(item) }}
+                                        />
 
-                                                {item.image && (
-                                                    <Image
-                                                        source={item.image}
-                                                        style={styles.img}
-                                                    />
-                                                )}
-                                            </View>
-
-                                        </TouchableOpacity>
-                                        :
-                                        <ActivityIndicator size="large" style={{ marginTop: '2.5%' }} />
-                                }
+                                        {item.image && (
+                                            <Image
+                                                source={item.image}
+                                                style={styles.img}
+                                            />
+                                        )}
+                                    </View>
+                                </TouchableOpacity>
                             </View>
                         );
                     }}
 
                 />
-
                 <Text style={styles.titulo}>Menú de platos</Text>
+                <View style={styles.menu}>
+                    <Text style={styles.texto}> <strong>INFORMACIÓN DEL MENU COMPLETO</strong></Text>
+                    <Text style={styles.texto}><strong>Promedio de HealthScore: </strong>{contextState.menu.puntajeSaludable}</Text>
+                    <Text style={styles.texto}><strong>Precio: $</strong>{contextState.menu.precioTotal}</Text>
+                    <Text style={styles.texto}><strong>Platos Veganos: </strong>{contextState.menu.platosVeganos}</Text>
+                    <Text style={styles.texto}><strong>Platos No Veganos: </strong>{contextState.menu.platosNoVeganos}</Text>
+                </View>
+
                 <FlatList
                     horizontal={true}
                     keyExtractor={(item) => item.title}
                     data={contextState.menu.platos}
                     renderItem={({ item }) => {
                         return (
-
                             <Card
                                 id={item.id}
                                 imagen={item.image}
@@ -110,13 +115,11 @@ const Home = ({ navigation, route }) => {
                                 precio={item.pricePerServing}
                                 vegano={item.vegan}
                             />
-
                         );
                     }}
                 />
             </View>
         </ImageBackground>
-
     );
 }
 
@@ -165,8 +168,21 @@ const styles = StyleSheet.create({
     flatlist: {
         width: "70%",
     },
-    prueba: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    }
+    menu: {
+        backgroundColor: 'white',
+        borderWidth: 2,
+        borderColor: 'black',
+        borderRadius: 15,
+        marginHorizontal: 10,
+        padding: 15,
+        marginTop: '2%',
+        marginBottom: '1.5%',
+        
+    },
+    texto: {
+        marginBottom: '2%',
+        fontSize: 18,
+        textAlign: 'left',
+        
+    },
 });

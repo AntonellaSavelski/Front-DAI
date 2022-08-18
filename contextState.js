@@ -7,7 +7,7 @@ export const initialState ={
         platos:[],
         precioTotal: 0,
         puntajeSaludable:0,
-        platosVegetarianos: 0,
+        platosNoVeganos: 0,
         platosVeganos:0
     }
 };
@@ -19,8 +19,8 @@ export const actionTypes={
     SetAddPrecio:'SET_ADD_PRECIO',
     SetMenuSaludable:'SET_MENU_SALUDABLE',
     SetAddSaludable:'SET_ADD_SALUDABLE',
-    SetMenuVegetariano:'SET_MENU_VEGETARIANO',
-    SetAddVegetariano:'SET_ADD_VEGETARIANO',
+    SetMenuNoVegano:'SET_MENU_NO_VEGANO',
+    SetAddNoVegano:'SET_ADD_NO_VEGANO',
     SetMenuVegano:'SET_MENU_VEGANO',
     SetAddVegano:'SET_ADD_VEGANO',
 };
@@ -79,20 +79,20 @@ export const reducer =(state ={}, action)=>{
                 }                
             };
 
-            case actionTypes.SetMenuVegetariano:
+            case actionTypes.SetMenuNoVegano:
             return{
                 ...state,
                 menu:{
                     ...state.menu,
-                    platosVegetarianos:action.value
+                    platosNoVeganos:action.value
                 }                
             };
-            case actionTypes.SetAddVegetariano:
+            case actionTypes.SetAddNoVegano:
             return{
                 ...state,
                 menu:{
                     ...state.menu,
-                    platosVegetarianos:state.menu.platosVegetarianos + action.value
+                    platosNoVeganos:state.menu.platosNoVeganos + action.value
                 }                
             };
 

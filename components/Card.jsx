@@ -13,6 +13,17 @@ const Card = (props) => {
         navigation.navigate('Detalle', { id: props.id })
         console.log(props.id)
     }
+    const onEliminarPress = async () => {
+        const newMenu = [...contextState.menu.platos];
+        newMenu.filter(p => p.id !== detallePlato.id)
+        console.log(newMenu)
+        setContextState({
+            type: actionTypes.SetMenuPlatos,
+            value: newMenu
+        })
+        navigation.navigate('Home');
+    }
+    
     return (
 
         <View style={style.card}>
@@ -36,7 +47,7 @@ const Card = (props) => {
                 <BotonDoble
                     text="Eliminar plato"
                     title="Eliminar plato"
-
+                    onPress={onEliminarPress}
                 />
             </View>
 

@@ -22,8 +22,8 @@ const Detalle = ({ route, navigation }) => {
 
     }, [])
 
-    const onAgregarPress = async (e) => {
-        if (contextState.menu.platos.length < 4 && contextState.menu.platosVeganos < 2 && contextState.menu.platosVegetarianos < 2) {
+    const onAgregarPress = async () => {
+        if (contextState.menu.platos.length < 4 && contextState.menu.platosVeganos < 2 && contextState.menu.platosNoVeganos < 2) {
             //agregar el plato al menu
             const newMenu = [...contextState.menu.platos];
             newMenu.push(detallePlato);
@@ -46,9 +46,9 @@ const Detalle = ({ route, navigation }) => {
                     value: 1
                 })
             }
-            else if (detallePlato.vegetarian) {
+            else if (!detallePlato.vegan) {
                 setContextState({
-                    type: actionTypes.SetAddVegetariano,
+                    type: actionTypes.SetAddNoVegano,
                     value: 1
                 })
             }
@@ -57,8 +57,19 @@ const Detalle = ({ route, navigation }) => {
         else {
             console.log("No se puede agregar plato al menú")
             Alert.alert("No se puede agregar plato al menú")
+            //UNA VEZ QUE ME TIRA ESTO YA NO PUEDO AGREGAR OTRO PLATO
         }
 
+    }
+    const onEliminarPress = async () => {
+        const newMenu = [...contextState.menu.platos];
+        newMenu.filter(p => p.id !== detallePlato.id)
+        console.log(newMenu)
+        setContextState({
+            type: actionTypes.SetMenuPlatos,
+            value: newMenu
+        })
+        navigation.navigate('Home');
     }
     return (
 
@@ -76,7 +87,6 @@ const Detalle = ({ route, navigation }) => {
                         source={{ uri: detallePlato.image }}
                         style={styles.img}
                     />
-
                     <Text style={styles.texto}><strong>Id: </strong>{id}</Text>
                     <Text style={styles.texto}><strong>Nombre: </strong>{detallePlato.title}</Text>
                     <Text style={styles.texto}><strong>Precio: $</strong>{detallePlato.pricePerServing}</Text>
@@ -89,7 +99,7 @@ const Detalle = ({ route, navigation }) => {
                             <Boton style={{ width: '100%' }}
                                 text="Eliminar"
                                 title="Eliminar"
-                                onPress={onAgregarPress}
+                                onPress={onEliminarPress}
                             />
                             :
                             <Boton style={{ width: '100%' }}

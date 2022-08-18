@@ -9,7 +9,7 @@ import BotonList from '../components/BotonList.jsx';
 import { useContextState } from '../contextState.js';
 
 
-const Home = ({ navigation,route }) => {
+const Home = ({ navigation, route }) => {
     const isFocused = useIsFocused();
     const { contextState, setContextState } = useContextState();
     const [Platos, setPlatos] = useState([]);
@@ -37,18 +37,18 @@ const Home = ({ navigation,route }) => {
         }
     }
     const onDetallePress = (item) => {
-        navigation.navigate('Detalle', {id:item.id})
+        navigation.navigate('Detalle', { id: item.id })
         //volver a que el search no tenga valor
     }
     useEffect(() => {
-        setBusqueda({Busqueda:""})
-        setPlatos({lista:[]})
-        if(isFocused){
+        setBusqueda({ Busqueda: "" })
+        setPlatos({ lista: [] })
+        if (isFocused) {
             getInitialData();
         }
     }, [isFocused]);
 
-    const getInitialData = async () =>{}
+    const getInitialData = async () => { }
 
     return (
         <ImageBackground source={fondoPag} style={styles.image} >
@@ -64,45 +64,53 @@ const Home = ({ navigation,route }) => {
                     renderItem={({ item }) => {
 
                         return (
-                           
-                            <TouchableOpacity onPress={() => { onDetallePress(item) }}>
-                                 <View style={styles.boton}>
-                                <BotonList
-                                    text={item.title}
-                                    onPress={() => { onDetallePress(item) }}
-                                />
-                                
-                                {item.image && (
-                                    <Image
-                                        source={item.image}
-                                        style={styles.img} 
-                                        />
-                                    )}
-                                    </View>
-                            </TouchableOpacity>
-                            
+                            //no funciona el disable
+                            <View>
+                                {
+                                    !disable ?
+                                        <TouchableOpacity onPress={() => { onDetallePress(item) }}>
+                                            <View style={styles.boton}>
+                                                <BotonList
+                                                    disable={disable}
+                                                    text={item.title}
+                                                    onPress={() => { onDetallePress(item) }}
+                                                />
+
+                                                {item.image && (
+                                                    <Image
+                                                        source={item.image}
+                                                        style={styles.img}
+                                                    />
+                                                )}
+                                            </View>
+
+                                        </TouchableOpacity>
+                                        :
+                                        <ActivityIndicator size="large" style={{ marginTop: '2.5%' }} />
+                                }
+                            </View>
                         );
                     }}
 
                 />
 
                 <Text style={styles.titulo}>Menú de platos</Text>
-                <FlatList 
-                 horizontal={true}
-                      keyExtractor={(item) => item.title}
+                <FlatList
+                    horizontal={true}
+                    keyExtractor={(item) => item.title}
                     data={contextState.menu.platos}
                     renderItem={({ item }) => {
                         return (
-                            
+
                             <Card
-                            id= {item.id}
-                            imagen= {item.image}
-                            titulo= {item.title}
-                            saludable= {item.healthScore}
-                            precio= {item.pricePerServing}
-                            vegano= {item.vegan}
+                                id={item.id}
+                                imagen={item.image}
+                                titulo={item.title}
+                                saludable={item.healthScore}
+                                precio={item.pricePerServing}
+                                vegano={item.vegan}
                             />
-  
+
                         );
                     }}
                 />
@@ -120,25 +128,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    boton:{
+    boton: {
         borderWidth: 1,
         paddingHorizontal: '8%',
-        paddingVertical:15,
-        minWidth:"100%",
+        paddingVertical: 15,
+        minWidth: "100%",
         borderRadius: 8,
         backgroundColor: "#fff",
         marginTop: '1%',
-        flex:1,
-        alignItems:'center',
-        flexDirection:'row',
-        justifyContent:'space-between'
+        flex: 1,
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     image: {
         minHeight: '100vh',
     },
-    img:{
-        height: 100, 
-        width:'25%',
+    img: {
+        height: 100,
+        width: '25%',
     },
     titulo: {
         fontSize: 30,
@@ -157,8 +165,8 @@ const styles = StyleSheet.create({
     flatlist: {
         width: "70%",
     },
-    prueba:{
-        flexDirection:'row',
-        justifyContent:'space-between'
+    prueba: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 });

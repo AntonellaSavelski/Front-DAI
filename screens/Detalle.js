@@ -17,57 +17,67 @@ const Detalle = ({ route, navigation }) => {
     let estaEnMenu = contextState.menu.platos.find(plato => plato.id === detallePlato.id)
 
     useEffect(async () => {
-        if(contextState.token===''){
+        if (contextState.token === '') {
             console.log("No estás autorizado para acceder")
             navigation.navigate("LogIn")
-        }else{
+        } else {
             const detallePlato = await getPlatosXId(id);
             setDetallePlato(detallePlato)
             setCargado("true")
         }
-
     }, [])
 
     const onAgregarPress = async () => {
         if (contextState.menu.platos.length < 4) {
             if (detallePlato.vegan && contextState.menu.platosVeganos <= 1 || !detallePlato.vegan && contextState.menu.platosNoVeganos <= 1) {
                 const newMenu = [...contextState.menu.platos];
-            newMenu.push(detallePlato);
-            setContextState({
-                type: actionTypes.SetMenuPlatos,
-                value: newMenu
-            })
-            navigation.navigate('Home');
-            setContextState({
-                type: actionTypes.SetAddPrecio,
-                value: detallePlato.pricePerServing
-            })
-            setContextState({
-                type: actionTypes.SetAddSaludable,
-                value: detallePlato.healthScore
-            })
-            if (detallePlato.vegan) {
+                newMenu.push(detallePlato);
                 setContextState({
-                    type: actionTypes.SetAddVegano,
-                    value: 1
+                    type: actionTypes.SetMenuPlatos,
+                    value: newMenu
                 })
-            }
-            else if (!detallePlato.vegan) {
+                navigation.navigate('Home');
                 setContextState({
-                    type: actionTypes.SetAddNoVegano,
-                    value: 1
+                    type: actionTypes.SetAddPrecio,
+                    value: detallePlato.pricePerServing
                 })
+                setContextState({
+                    type: actionTypes.SetAddSaludable,
+                    value: detallePlato.healthScore
+                })
+                setContextState({
+                    type: actionTypes.SetMenuPromedio,
+                    value: detallePlato.healthScore
+                })
+                if (detallePlato.vegan) {
+                    setContextState({
+                        type: actionTypes.SetAddVegano,
+                        value: 1
+                    })
+                }
+                else if (!detallePlato.vegan) {
+                    setContextState({
+                        type: actionTypes.SetAddNoVegano,
+                        value: 1
+                    })
+                }
+                console.log(contextState.menu)
             }
-            console.log(contextState.menu)
+            else {
+                if (detallePlato.vegan) {
+                    console.log("No se puede agregar otro plato vegano al menú")
+                    Alert.alert("No se puede agregar otro plato vegano al menú")
+                }
+                else if (!detallePlato.vegan) {
+                    console.log("No se puede agregar otro plato no vegano al menú")
+                    Alert.alert("No se puede agregar otro plato no vegano al menú")
+                }
+                else {
+                    console.log("No se pueden agregar más platos al menú, limíte cumplido")
+                    Alert.alert("No se pueden agregar más platos al menú, limíte cumplido")
+                }
+            }
         }
-        else {
-            console.log("No se puede agregar plato al menú")
-            Alert.alert("No se puede agregar plato al menú")
-            //UNA VEZ QUE ME TIRA ESTO YA NO PUEDO AGREGAR OTRO PLATO
-        }
-        }
-            //agregar el plato al menu
-            
 
     }
     const onEliminarPress = async () => {
@@ -99,64 +109,64 @@ const Detalle = ({ route, navigation }) => {
             })
         }
     }
-    if (cargado==="false"){
-        return(
+    if (cargado === "false") {
+        return (
             <ImageBackground source={fondoPag} >
-            <View style={styles.vista}>
-            <Text style={styles.titulo}> Cargando</Text>
-            <ActivityIndicator size="large" style={{marginTop: '2.5%'}}/>
-            </View>
+                <View style={styles.vista}>
+                    <Text style={styles.titulo}> Cargando</Text>
+                    <ActivityIndicator size="large" style={{ marginTop: '2.5%' }} />
+                </View>
             </ImageBackground>
         );
 
-    }else{
+    } else {
         return (
-            
-            <ImageBackground source={fondoPag} >
-                
-                    <View style={styles.vista}>
 
-                        <Text style={styles.atras}
-                            onPress={() => {
-                                navigation.navigate('Home')
-                            }}>
-                            Volver atrás
-                        </Text>
-                        <Text style={styles.titulo}><strong>Detalle del Plato</strong></Text>
-                        <View style={styles.detalle}>
-                            <Image
-                                source={{ uri: detallePlato.image }}
-                                style={styles.img}
-                            />
-                            <Text style={styles.texto}><strong>Id: </strong>{id}</Text>
-                            <Text style={styles.texto}><strong>Nombre: </strong>{detallePlato.title}</Text>
-                            <Text style={styles.texto}><strong>Precio: $</strong>{detallePlato.pricePerServing}</Text>
-                            <Text style={styles.texto}><strong>Es vegano: </strong>{detallePlato.vegan ? 'Si' : 'No'}</Text>
-                            <Text style={styles.texto}><strong>Es vegetariano: </strong>{detallePlato.vegetarian ? 'Si' : 'No'}</Text>
-                            <Text style={styles.texto}><strong>Puntaje saludable: </strong>{detallePlato.healthScore}</Text>
-                            {
-                                estaEnMenu
-                                    ?
-                                    <Boton style={{ width: '100%' }}
-                                        text="Eliminar"
-                                        title="Eliminar"
-                                        onPress={onEliminarPress}
-                                    />
-                                    :
-                                    <Boton style={{ width: '100%' }}
-                                        text="Agregar al menú"
-                                        title="Agregar al menú"
-                                        onPress={onAgregarPress}
-                                    />
-                            }
-        
-                        </View>
+            <ImageBackground source={fondoPag} >
+
+                <View style={styles.vista}>
+
+                    <Text style={styles.atras}
+                        onPress={() => {
+                            navigation.navigate('Home')
+                        }}>
+                        Volver atrás
+                    </Text>
+                    <Text style={styles.titulo}><strong>Detalle del Plato</strong></Text>
+                    <View style={styles.detalle}>
+                        <Image
+                            source={{ uri: detallePlato.image }}
+                            style={styles.img}
+                        />
+                        <Text style={styles.texto}><strong>Id: </strong>{id}</Text>
+                        <Text style={styles.texto}><strong>Nombre: </strong>{detallePlato.title}</Text>
+                        <Text style={styles.texto}><strong>Precio: $</strong>{detallePlato.pricePerServing}</Text>
+                        <Text style={styles.texto}><strong>Es vegano: </strong>{detallePlato.vegan ? 'Si' : 'No'}</Text>
+                        <Text style={styles.texto}><strong>Es vegetariano: </strong>{detallePlato.vegetarian ? 'Si' : 'No'}</Text>
+                        <Text style={styles.texto}><strong>Puntaje saludable: </strong>{detallePlato.healthScore}</Text>
+                        {
+                            estaEnMenu
+                                ?
+                                <Boton style={{ width: '100%' }}
+                                    text="Eliminar"
+                                    title="Eliminar"
+                                    onPress={onEliminarPress}
+                                />
+                                :
+                                <Boton style={{ width: '100%' }}
+                                    text="Agregar al menú"
+                                    title="Agregar al menú"
+                                    onPress={onAgregarPress}
+                                />
+                        }
+
                     </View>
+                </View>
             </ImageBackground>
-    
+
         );
     }
-        
+
 }
 
 export default Detalle
@@ -182,7 +192,7 @@ const styles = StyleSheet.create({
         marginBottom: '3%',
         fontSize: 20,
         textAlign: 'left'
-        
+
     },
     titulo: {
         fontSize: 30,

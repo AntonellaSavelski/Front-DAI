@@ -7,6 +7,7 @@ export const initialState ={
         platos:[],
         precioTotal: 0,
         puntajeSaludable:0,
+        promedioSaludable:0,
         platosNoVeganos: 0,
         platosVeganos:0
     }
@@ -19,6 +20,7 @@ export const actionTypes={
     SetAddPrecio:'SET_ADD_PRECIO',
     SetMenuSaludable:'SET_MENU_SALUDABLE',
     SetAddSaludable:'SET_ADD_SALUDABLE',
+    SetMenuPromedio:'SET_MENU_PROMEDIO',
     SetMenuNoVegano:'SET_MENU_NO_VEGANO',
     SetAddNoVegano:'SET_ADD_NO_VEGANO',
     SetMenuVegano:'SET_MENU_VEGANO',
@@ -76,6 +78,14 @@ export const reducer =(state ={}, action)=>{
                 menu:{
                     ...state.menu,
                     puntajeSaludable:state.menu.puntajeSaludable + action.value
+                }                
+            };
+            case actionTypes.SetMenuPromedio:
+            return{
+                ...state,
+                menu:{
+                    ...state.menu,
+                    promedio:state.menu.puntajeSaludable /state.menu.platos.length
                 }                
             };
 

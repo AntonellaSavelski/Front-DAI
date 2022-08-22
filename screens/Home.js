@@ -99,19 +99,19 @@ const Home = ({ navigation, route }) => {
                 />
                 <Text style={styles.titulo}>Menú de platos</Text>
                 {
-                                mostrarInfo
-                                    ?
-                                    <View style={styles.menu}>
-                                        <Text style={styles.texto}> <strong>INFORMACIÓN DEL MENU COMPLETO</strong></Text>
-                                        <Text style={styles.texto}><strong>Promedio de HealthScore: </strong>{contextState.menu.puntajeSaludable.toFixed()}</Text>
-                                        <Text style={styles.texto}><strong>Precio: $</strong>{contextState.menu.precioTotal.toFixed()}</Text>
-                                        <Text style={styles.texto}><strong>Platos Veganos: </strong>{contextState.menu.platosVeganos}</Text>
-                                        <Text style={styles.texto}><strong>Platos No Veganos: </strong>{contextState.menu.platosNoVeganos}</Text>
-                                    </View>
-                                    :
-                                    <View style={styles.menu}>
-                                        <Text style={styles.texto}><strong>AÚN NO HAY PLATOS EN EL MENÚ </strong></Text>
-                                    </View>
+                    mostrarInfo
+                        ?
+                        <View style={styles.menu}>
+                            <Text style={styles.texto}> <strong>INFORMACIÓN DEL MENU COMPLETO</strong></Text>
+                            <Text style={styles.texto}><strong>Promedio de HealthScore: </strong>{contextState.menu.promedioSaludable.toFixed()}</Text>
+                            <Text style={styles.texto}><strong>Precio: $</strong>{contextState.menu.precioTotal.toFixed()}</Text>
+                            <Text style={styles.texto}><strong>Platos Veganos: </strong>{contextState.menu.platosVeganos}</Text>
+                            <Text style={styles.texto}><strong>Platos No Veganos: </strong>{contextState.menu.platosNoVeganos}</Text>
+                        </View>
+                        :
+                        <View style={styles.menu}>
+                            <Text style={styles.texto}><strong>AÚN NO HAY PLATOS EN EL MENÚ </strong></Text>
+                        </View>
                 }
                 
 

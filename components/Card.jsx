@@ -3,25 +3,46 @@ import { Text, View, StyleSheet, TouchableOpacity, Image, Button } from 'react-n
 import fondoPag from '../assets/img/fondoPag.jpg'
 import BotonDoble from './botonDoble';
 import { useNavigation } from '@react-navigation/native';
+import { useContextState, actionTypes } from '../contextState';
 
 
 
 const Card = (props) => {
     const navigation = useNavigation();
+    const { contextState, setContextState } = useContextState();
 
     const onDetallePress = () => {
         navigation.navigate('Detalle', { id: props.id })
         console.log(props.id)
     }
     const onEliminarPress = async () => {
-        const newMenu = [...contextState.menu.platos];
-        newMenu.filter(p => p.id !== detallePlato.id)
+        const newMenu = contextState.menu.platos.filter(p => p.id !== props.id);
         console.log(newMenu)
         setContextState({
             type: actionTypes.SetMenuPlatos,
             value: newMenu
         })
         navigation.navigate('Home');
+        setContextState({
+            type: actionTypes.SetAddPrecio,
+            value: -(props.precio)
+        })
+        setContextState({
+            type: actionTypes.SetAddSaludable,
+            value: -(props.saludable)
+        })
+        if (props.vegano) {
+            setContextState({
+                type: actionTypes.SetAddVegano,
+                value: (-1)
+            })
+        }
+        else if (!props.vegano) {
+            setContextState({
+                type: actionTypes.SetAddNoVegano,
+                value: (-1)
+            })
+        }
     }
     
     return (

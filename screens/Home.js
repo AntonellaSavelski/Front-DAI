@@ -17,6 +17,11 @@ const Home = ({ navigation, route }) => {
         lista: []
     });
     const [disable, setDisable] = useState(false);
+    let platosEnMenu=0;
+    let mostrarInfo=false;
+    if (contextState.menu.platosNoVeganos>0 || contextState.menu.platosVeganos>0) {
+        mostrarInfo = true;
+    }
 
     const getPlatosPorNombre = async (search) => {
         let tamano = search.length;
@@ -93,13 +98,22 @@ const Home = ({ navigation, route }) => {
 
                 />
                 <Text style={styles.titulo}>Menú de platos</Text>
-                <View style={styles.menu}>
-                    <Text style={styles.texto}> <strong>INFORMACIÓN DEL MENU COMPLETO</strong></Text>
-                    <Text style={styles.texto}><strong>Promedio de HealthScore: </strong>{contextState.menu.puntajeSaludable}</Text>
-                    <Text style={styles.texto}><strong>Precio: $</strong>{contextState.menu.precioTotal}</Text>
-                    <Text style={styles.texto}><strong>Platos Veganos: </strong>{contextState.menu.platosVeganos}</Text>
-                    <Text style={styles.texto}><strong>Platos No Veganos: </strong>{contextState.menu.platosNoVeganos}</Text>
-                </View>
+                {
+                                mostrarInfo
+                                    ?
+                                    <View style={styles.menu}>
+                                        <Text style={styles.texto}> <strong>INFORMACIÓN DEL MENU COMPLETO</strong></Text>
+                                        <Text style={styles.texto}><strong>Promedio de HealthScore: </strong>{contextState.menu.puntajeSaludable.toFixed()}</Text>
+                                        <Text style={styles.texto}><strong>Precio: $</strong>{contextState.menu.precioTotal.toFixed()}</Text>
+                                        <Text style={styles.texto}><strong>Platos Veganos: </strong>{contextState.menu.platosVeganos}</Text>
+                                        <Text style={styles.texto}><strong>Platos No Veganos: </strong>{contextState.menu.platosNoVeganos}</Text>
+                                    </View>
+                                    :
+                                    <View style={styles.menu}>
+                                        <Text style={styles.texto}><strong>AÚN NO HAY PLATOS EN EL MENÚ </strong></Text>
+                                    </View>
+                }
+                
 
                 <FlatList
                     horizontal={true}

@@ -9,7 +9,6 @@ import { actionTypes, useContextState } from '../contextState.js';
 import { AntDesign } from '@expo/vector-icons';
 
 const Detalle = ({ route, navigation }) => {
-    
 
     const { id } = route.params
     const { contextState, setContextState } = useContextState();
@@ -30,9 +29,9 @@ const Detalle = ({ route, navigation }) => {
     }, [])
 
     const onAgregarPress = async () => {
-        if (contextState.menu.platos.length < 4 && contextState.menu.platosVeganos < 2 && contextState.menu.platosNoVeganos < 2) {
-            //agregar el plato al menu
-            const newMenu = [...contextState.menu.platos];
+        if (contextState.menu.platos.length < 4) {
+            if (detallePlato.vegan && contextState.menu.platosVeganos <= 1 || !detallePlato.vegan && contextState.menu.platosNoVeganos <= 1) {
+                const newMenu = [...contextState.menu.platos];
             newMenu.push(detallePlato);
             setContextState({
                 type: actionTypes.SetMenuPlatos,
@@ -66,17 +65,39 @@ const Detalle = ({ route, navigation }) => {
             Alert.alert("No se puede agregar plato al menú")
             //UNA VEZ QUE ME TIRA ESTO YA NO PUEDO AGREGAR OTRO PLATO
         }
+        }
+            //agregar el plato al menu
+            
 
     }
     const onEliminarPress = async () => {
-        const newMenu = [...contextState.menu.platos];
-        newMenu.filter(p => p.id !== detallePlato.id)
+        const newMenu = contextState.menu.platos.filter(p => p.id !== detallePlato.id);
         console.log(newMenu)
         setContextState({
             type: actionTypes.SetMenuPlatos,
             value: newMenu
         })
         navigation.navigate('Home');
+        setContextState({
+            type: actionTypes.SetAddPrecio,
+            value: -(detallePlato.pricePerServing)
+        })
+        setContextState({
+            type: actionTypes.SetAddSaludable,
+            value: -(detallePlato.healthScore)
+        })
+        if (detallePlato.vegan) {
+            setContextState({
+                type: actionTypes.SetAddVegano,
+                value: (-1)
+            })
+        }
+        else if (!detallePlato.vegan) {
+            setContextState({
+                type: actionTypes.SetAddNoVegano,
+                value: (-1)
+            })
+        }
     }
     if (cargado==="false"){
         return(

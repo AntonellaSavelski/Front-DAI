@@ -1,32 +1,26 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 const BotonList = (props) => {
 
     const { onPress, text, disable } = props
     return (
     
-        <TouchableOpacity
-            
+        <TouchableOpacity  
             disabled={disable}
             onPress={onPress}
         >
             <Text style={style.buttonText}>
                 {text}
             </Text>
-        
         </TouchableOpacity>
-       
     )
 }
 
 export default BotonList
 
 const style = StyleSheet.create({
-
     buttonText: {
         color: 'black',
-
     }
-
 });

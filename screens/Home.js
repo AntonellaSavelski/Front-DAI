@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Alert, FlatList, Button, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Alert, FlatList, TouchableOpacity } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import Boton from '../components/boton.jsx';
 import fondoPag from '../assets/img/fondoPag.jpg'
 import Card from '../components/Card.jsx';
 import { getPlatos, getPlatosXNombre } from '../services/buscadorService.js';
@@ -17,9 +16,8 @@ const Home = ({ navigation, route }) => {
         lista: []
     });
     const [disable, setDisable] = useState(false);
-    let platosEnMenu=0;
-    let mostrarInfo=false;
-    if (contextState.menu.platosNoVeganos>0 || contextState.menu.platosVeganos>0) {
+    let mostrarInfo = false;
+    if (contextState.menu.platosNoVeganos > 0 || contextState.menu.platosVeganos > 0) {
         mostrarInfo = true;
     }
 
@@ -29,7 +27,6 @@ const Home = ({ navigation, route }) => {
         if (!search || tamano <= 2) {
             console.log("Por favor ingrese un plato que contenga más de 2 caracteres")
             setBusqueda({ lista: [] })
-
         }
         else {
             getPlatosXNombre(search).then((res) => {
@@ -43,7 +40,6 @@ const Home = ({ navigation, route }) => {
     }
     const onDetallePress = (item) => {
         navigation.navigate('Detalle', { id: item.id })
-        //volver a que el search no tenga valor
     }
     useEffect(() => {
 
@@ -102,21 +98,18 @@ const Home = ({ navigation, route }) => {
                     mostrarInfo
                         ?
                         <View style={styles.menu}>
-                            <Text style={styles.texto}> <strong>INFORMACIÓN DEL MENU COMPLETO</strong></Text>
-                            <Text style={styles.texto}><strong>Promedio de HealthScore: </strong>{contextState.menu.promedioSaludable.toFixed()}</Text>
+                            <Text style={styles.text}> <strong>INFORMACIÓN DEL MENU COMPLETO</strong></Text>
+                            <Text style={styles.texto}><strong>Promedio de HealthScore: </strong>{contextState.menu.puntajeSaludable / contextState.menu.platos.length}</Text>
                             <Text style={styles.texto}><strong>Precio: $</strong>{contextState.menu.precioTotal.toFixed()}</Text>
                             <Text style={styles.texto}><strong>Platos Veganos: </strong>{contextState.menu.platosVeganos}</Text>
                             <Text style={styles.texto}><strong>Platos No Veganos: </strong>{contextState.menu.platosNoVeganos}</Text>
                         </View>
                         :
                         <View style={styles.menu}>
-                            <Text style={styles.texto}><strong>AÚN NO HAY PLATOS EN EL MENÚ </strong></Text>
+                            <Text style={styles.descrip}><strong>AÚN NO HAY PLATOS EN EL MENÚ </strong></Text>
                         </View>
                 }
-                
-
                 <FlatList
-                    horizontal={true}
                     keyExtractor={(item) => item.title}
                     data={contextState.menu.platos}
                     renderItem={({ item }) => {
@@ -191,12 +184,21 @@ const styles = StyleSheet.create({
         padding: 15,
         marginTop: '2%',
         marginBottom: '1.5%',
-        
+
     },
     texto: {
         marginBottom: '2%',
         fontSize: 18,
         textAlign: 'left',
-        
+
     },
+    text: {
+        marginBottom: '2%',
+        fontSize: 18,
+        textAlign: 'center',
+    },
+    descrip: {
+        fontSize: 18,
+        textAlign: 'center',
+    }
 });

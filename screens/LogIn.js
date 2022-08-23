@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Alert, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Boton from '../components/boton.jsx';
+import Boton from '../components/Boton.jsx';
 import { postLogIn } from '../services/logInService';
 import fondoPag from '../assets/img/fondoPag.jpg'
 import { actionTypes, useContextState } from '../contextState.js';

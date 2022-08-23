@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Alert, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Boton from '../components/boton.jsx';
-import { postLogIn } from '../services/logInService';
+import Boton from '../components/Boton.jsx';
 import fondoPag from '../assets/img/fondoPag.jpg'
 import { getPlatosXId } from '../services/buscadorService.js';
 import { actionTypes, useContextState } from '../contextState.js';
-import { AntDesign } from '@expo/vector-icons';
 
 const Detalle = ({ route, navigation }) => {
 
@@ -45,10 +43,6 @@ const Detalle = ({ route, navigation }) => {
                     type: actionTypes.SetAddSaludable,
                     value: detallePlato.healthScore
                 })
-                setContextState({
-                    type: actionTypes.SetMenuPromedio,
-                    value: detallePlato.healthScore
-                })
                 if (detallePlato.vegan) {
                     setContextState({
                         type: actionTypes.SetAddVegano,
@@ -71,10 +65,6 @@ const Detalle = ({ route, navigation }) => {
                 else if (!detallePlato.vegan) {
                     console.log("No se puede agregar otro plato no vegano al menú")
                     Alert.alert("No se puede agregar otro plato no vegano al menú")
-                }
-                else {
-                    console.log("No se pueden agregar más platos al menú, limíte cumplido")
-                    Alert.alert("No se pueden agregar más platos al menú, limíte cumplido")
                 }
             }
         }
@@ -191,8 +181,8 @@ const styles = StyleSheet.create({
     texto: {
         marginBottom: '3%',
         fontSize: 20,
-        textAlign: 'left'
-
+        textAlign: 'left',
+        maxWidth: 300
     },
     titulo: {
         fontSize: 30,

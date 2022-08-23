@@ -4,22 +4,6 @@ import axiosClient from "../axios/axiosBusqueda";
 //const apiKey= "apiKey=a60c366f621d4bfcb00ef85f47523958";
 const apiKey= "apiKey=2f34f3b6abb54bc48a7dacd61c0353e9";
 
-export const getPlatos = async (setUseState) => {
-
-    return axiosClient
-        .get(`/recipes/complexSearch?apiKey=a60c366f621d4bfcb00ef85f47523958`,{
-      
-        })
-        .then(async (res) => {
-            setUseState(res.data.results); //me trae todos los platos y los asigna a setPlatos
-            console.log(res.data.results);
-            return res.data.results
-        })
-        .catch((e) => {
-            console.log(`register error`, e.response);
-            throw "error"
-        });
-};
 export const getPlatosXNombre = async (busqueda) =>{
     return axiosClient
         .get(`/recipes/complexSearch?${apiKey}&query=${busqueda}`,{

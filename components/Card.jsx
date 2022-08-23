@@ -1,7 +1,7 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image, Button } from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
 import fondoPag from '../assets/img/fondoPag.jpg'
-import BotonDoble from './botonDoble';
+import BotonDoble from './BotonDoble.jsx';
 import { useNavigation } from '@react-navigation/native';
 import { useContextState, actionTypes } from '../contextState';
 

@@ -14,9 +14,7 @@ const Boton = (props) => {
             <Text style={style.buttonText}>
                 {text}
             </Text>
-        
         </TouchableOpacity>
-       
     )
 }
 

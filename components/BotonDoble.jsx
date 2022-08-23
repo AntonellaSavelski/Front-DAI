@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 const BotonDoble = (props) => {
 
@@ -13,9 +13,7 @@ const BotonDoble = (props) => {
             <Text style={style.buttonText}>
                 {text}
             </Text>
-        
         </TouchableOpacity>
-       
     )
 }
 
